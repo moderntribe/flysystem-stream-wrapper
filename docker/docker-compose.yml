@@ -7,14 +7,17 @@ services:
     networks:
       - flysystem
     depends_on:
-      - "s3-server"
+      - "s3server"
     volumes:
       - test_data:/application/www
-  s3-server:
+  s3server:
     image: bitnami/minio:latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
+    hostname: s3-server
     networks:
-      - flysystem
+      flysystem:
+        aliases:
+          - s3server
     ports:
       - "9000:9000"
     volumes:
