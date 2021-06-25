@@ -17,6 +17,8 @@ services:
       - flysystem
     ports:
       - "9000:9000"
+    volumes:
+      - minio:/data
     environment:
       - MINIO_SERVER_HOST=s3-server
       - MINIO_ACCESS_KEY=flysystem
