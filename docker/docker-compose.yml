@@ -20,7 +20,6 @@ services:
     volumes:
       - minio:/data
     environment:
-      - MINIO_SERVER_HOST=s3-server
       - MINIO_ACCESS_KEY=flysystem
       - MINIO_SECRET_KEY=helloworld
       - MINIO_DEFAULT_BUCKETS=test-bucket:public
@@ -30,6 +29,11 @@ volumes:
     driver_opts:
       type: none
       device: ./ # relative to this project's root
+      o: bind
+  minio:
+    driver_opts:
+      type: none
+      device: ./docker/minio # relative to this project's root
       o: bind
 
 networks:
