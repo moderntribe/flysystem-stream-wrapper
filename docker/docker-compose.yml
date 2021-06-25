@@ -4,8 +4,6 @@ services:
   php-tests:
     image: moderntribe/squareone-php:73-latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
-    networks:
-      - flysystem
     depends_on:
       - "s3server"
     volumes:
@@ -13,11 +11,6 @@ services:
   s3server:
     image: bitnami/minio:latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
-    hostname: s3server
-    networks:
-      flysystem:
-        aliases:
-          - s3server
     ports:
       - "9000:9000"
     environment:
@@ -31,7 +24,3 @@ volumes:
       type: none
       device: ./ # relative to this project's root
       o: bind
-
-networks:
-  flysystem:
-    driver: "bridge"
