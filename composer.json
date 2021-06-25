@@ -61,7 +61,6 @@
       "docker exec -it -w /application/www flysystem_php-tests_1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
     ],
     "test-ci": [
-      "@up",
       "docker exec -i -w /application/www flysystem_php-tests_1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
     ]
   },

@@ -48,5 +48,11 @@ jobs:
         run: |
           echo "SQ1_UID=$(id --user)" >> docker/.env
           echo "SQ1_GID=$(id --group)" >> docker/.env
-      - name: Unit testing
+      - name: Set up Docker
+        run: composer up
+      - name: Wait for containers to come up
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '20s'
+      - name: Run Tests
         run: composer test-ci
