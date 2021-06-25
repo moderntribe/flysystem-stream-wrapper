@@ -44,6 +44,9 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         run: ./vendor/bin/phpcs ${{ steps.filter.outputs.src_files }}
+      - name: Set Docker Environment Variables
+        run: |
+          echo "SQ1_UID=$(id --user)" >> docker/.env
+          echo "SQ1_GID=$(id --group)" >> docker/.env
       - name: Unit testing
-        run: docker-compose --project-name flysystem exec -T -w /application/www php /application/www/vendor/bin/phpunit
-        working-directory: docker
+        run: composer test-ci
