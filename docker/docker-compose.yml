@@ -13,7 +13,7 @@ services:
   s3server:
     image: bitnami/minio:latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
-    hostname: s3-server
+    hostname: s3server
     networks:
       flysystem:
         aliases:
