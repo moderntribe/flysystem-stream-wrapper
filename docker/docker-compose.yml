@@ -20,8 +20,6 @@ services:
           - s3server
     ports:
       - "9000:9000"
-    volumes:
-      - minio:/data
     environment:
       - MINIO_ACCESS_KEY=flysystem
       - MINIO_SECRET_KEY=helloworld
@@ -32,11 +30,6 @@ volumes:
     driver_opts:
       type: none
       device: ./ # relative to this project's root
-      o: bind
-  minio:
-    driver_opts:
-      type: none
-      device: ./docker/minio # relative to this project's root
       o: bind
 
 networks:
