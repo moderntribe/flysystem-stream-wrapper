@@ -10,6 +10,7 @@ services:
       - test_data:/application/www
   minio:
     image: bitnami/minio:latest
+    user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
     networks:
       default:
         aliases:
