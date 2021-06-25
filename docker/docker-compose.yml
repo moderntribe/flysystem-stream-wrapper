@@ -4,6 +4,8 @@ services:
   php-tests:
     image: moderntribe/squareone-php:73-latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
+    depends_on:
+      - "minio"
     volumes:
       - test_data:/application/www
   minio:
