@@ -45,4 +45,5 @@ jobs:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         run: ./vendor/bin/phpcs ${{ steps.filter.outputs.src_files }}
       - name: Unit testing
-        run: composer test-ci
+        run: docker-compose --project-name flysystem exec -T -w /application/www php /application/www/vendor/bin/phpunit
+        working-directory: docker
