@@ -1,0 +1,66 @@
+{
+  "name": "moderntribe/flysystem-stream-wrapper",
+  "description": "A PHP Stream Wrapper for Flysystem",
+  "type": "library",
+  "keywords": [
+    "moderntribe",
+    "flysystem",
+    "streamwrapper",
+    "stream-wrapper"
+  ],
+  "authors": [
+    {
+      "name": "Justin Frydman",
+      "role": "Developer"
+    },
+    {
+      "name": "Modern Tribe",
+      "email": "admin@tri.be",
+      "homepage": "https://tri.be"
+    }
+  ],
+  "require": {
+    "php": "^7.3",
+    "league/flysystem": "^1.0",
+    "symfony/lock": "^5.2",
+    "guzzlehttp/psr7": "^1.5",
+    "jhofm/flysystem-iterator": "^2.2"
+  },
+  "require-dev": {
+    "ext-exif": "*",
+    "league/flysystem-aws-s3-v3": "^1.0",
+    "phpunit/phpunit": "^9",
+    "php-mock/php-mock-mockery": "^1.3",
+    "moderntribe/coding-standards": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tribe\\Storage\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tribe\\Storage\\Tests\\": "tests"
+    },
+    "files": [
+      "tests/Bootstrap.php"
+    ]
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "7.3.0"
+    }
+  },
+  "scripts": {
+    "up": "docker-compose --project-directory docker --project-name flysystem up -d --force-recreate",
+    "down": "docker-compose --project-directory docker --project-name flysystem down --remove-orphans",
+    "shell": "docker exec -it flysystem_php-tests_1 /bin/bash",
+    "test": [
+      "@up",
+      "docker exec -it -w /application/www flysystem_php-tests_1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
+    ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
