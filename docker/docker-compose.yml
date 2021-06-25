@@ -4,20 +4,21 @@ services:
   php-tests:
     image: moderntribe/squareone-php:73-latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
+    networks:
+      - flysystem
     depends_on:
-      - "minio"
+      - "s3-server"
     volumes:
       - test_data:/application/www
-  minio:
+  s3-server:
     image: bitnami/minio:latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
     networks:
-      default:
-        aliases:
-          - tests3
+      - flysystem
     ports:
       - "9000:9000"
     environment:
+      - MINIO_SERVER_HOST=s3-server
       - MINIO_ACCESS_KEY=flysystem
       - MINIO_SECRET_KEY=helloworld
       - MINIO_DEFAULT_BUCKETS=test-bucket:public
@@ -30,4 +31,5 @@ volumes:
       o: bind
 
 networks:
-  default:
+  flysystem:
+    driver: "bridge"

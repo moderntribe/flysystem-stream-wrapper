@@ -26,7 +26,7 @@ class StreamWrapperTestCase extends TestCase {
 			],
 			'region'                  => 'us-east-1',
 			'version'                 => 'latest',
-			'endpoint'                => 'http://tests3:9000',
+			'endpoint'                => 'http://s3-server:9000',
 			'use_path_style_endpoint' => true,
 		] );
 
