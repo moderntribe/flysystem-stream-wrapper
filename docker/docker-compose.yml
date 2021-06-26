@@ -1,22 +1,27 @@
 version: '3'
 
 services:
-  php-tests:
-    image: moderntribe/squareone-php:73-latest
-    user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
-    depends_on:
-      - "s3server"
-    volumes:
-      - test_data:/application/www
-  s3server:
+  cloud-provider:
     image: bitnami/minio:latest
-    user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
+    networks:
+      - flysystem
     ports:
-      - "9000:9000"
+      - "9898:9000"
+    volumes:
+      - minio_data:/data
     environment:
       - MINIO_ACCESS_KEY=flysystem
       - MINIO_SECRET_KEY=helloworld
       - MINIO_DEFAULT_BUCKETS=test-bucket:public
+  php-tests:
+    image: moderntribe/squareone-php:73-latest
+    user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
+    networks:
+      - flysystem
+    depends_on:
+      - "cloud-provider"
+    volumes:
+      - test_data:/application/www
 
 volumes:
   test_data:
@@ -24,3 +29,8 @@ volumes:
       type: none
       device: ./ # relative to this project's root
       o: bind
+  minio_data:
+
+networks:
+  flysystem:
+    driver: bridge
