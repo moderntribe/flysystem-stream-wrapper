@@ -5,13 +5,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  phpcs:
-    name: Test (PHP ${{ matrix.php-versions }})
+  lint-test:
+    name: Lint + Test (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.3','7.4']
+        php-versions: ['7.3']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -44,5 +44,15 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
         run: ./vendor/bin/phpcs ${{ steps.filter.outputs.src_files }}
-      - name: Unit testing
-        run: composer test
+      - name: Set Docker Environment Variables
+        run: |
+          echo "SQ1_UID=$(id --user)" >> docker/.env
+          echo "SQ1_GID=$(id --group)" >> docker/.env
+      - name: Set up Docker
+        run: composer up
+      - name: Wait for containers to come up
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '10s'
+      - name: Run Tests
+        run: composer test-ci
