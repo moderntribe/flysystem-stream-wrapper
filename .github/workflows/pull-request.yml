@@ -5,8 +5,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  phpcs:
-    name: Test (PHP ${{ matrix.php-versions }})
+  lint-test:
+    name: Lint + Test (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
