@@ -747,7 +747,10 @@ class StreamWrapper {
 				return $this->trigger_error( $e->getMessage() );
 			}
 		} catch ( Throwable $e ) {
-			return $this->trigger_error( $e->getMessage() );
+			// The API will request a file and not expect it to exist
+			if ( ! ($flags & STREAM_URL_STAT_QUIET) ) {
+				return $this->trigger_error( $e->getMessage() );
+			}
 		}
 
 		return false;
