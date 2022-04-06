@@ -62,10 +62,10 @@
     "shell": "docker exec -it flysystem_php-tests_1 /bin/bash",
     "test": [
       "@up",
-      "docker exec -it -w /application/www flysystem_php-tests_1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
+      "docker exec -it -w /application/www flysystem-php-tests-1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
     ],
     "test-ci": [
-      "docker exec -i -w /application/www flysystem_php-tests_1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
+      "docker exec -i -w /application/www flysystem-php-tests-1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
     ]
   },
   "minimum-stability": "dev",
