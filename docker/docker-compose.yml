@@ -2,18 +2,23 @@ version: '3'
 
 services:
   cloud-provider:
-    image: bitnami/minio:latest
+    container_name: cloud-provider
+    image: bitnami/minio:2022.4.1
     networks:
       - flysystem
     ports:
-      - "9898:9000"
+      - '9000:9000'
+      - '9001:9001'
     volumes:
       - minio_data:/data
     environment:
-      - MINIO_ACCESS_KEY=flysystem
-      - MINIO_SECRET_KEY=helloworld
+      - MINIO_ROOT_USER=flysystem
+      - MINIO_ROOT_PASSWORD=helloworld
+      - MINIO_SERVER_ACCESS_KEY=flysystem
+      - MINIO_SERVER_SECRET_KEY=helloworld
       - MINIO_DEFAULT_BUCKETS=test-bucket:public
   php-tests:
+    container_name: flysystem-wrapper-tests
     image: moderntribe/squareone-php:73-latest
     user: "${SQ1_UID:-1000}:${SQ1_GID:-1000}"
     networks:

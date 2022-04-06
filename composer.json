@@ -50,18 +50,22 @@
     "sort-packages": true,
     "platform": {
       "php": "7.3.0"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "cweagans/composer-patches": true
     }
   },
   "scripts": {
-    "up": "docker-compose --project-directory docker --project-name flysystem up -d --force-recreate",
-    "down": "docker-compose --project-directory docker --project-name flysystem down --remove-orphans",
-    "shell": "docker exec -it flysystem_php-tests_1 /bin/bash",
+    "up": "docker-compose --project-directory docker up -d --force-recreate",
+    "down": "docker-compose --project-directory docker down --remove-orphans",
+    "shell": "docker exec -it flysystem-wrapper-tests /bin/bash",
     "test": [
       "@up",
-      "docker exec -it -w /application/www flysystem_php-tests_1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
+      "docker exec -it -w /application/www flysystem-wrapper-tests /usr/local/bin/php /application/www/vendor/bin/phpunit"
     ],
     "test-ci": [
-      "docker exec -i -w /application/www flysystem_php-tests_1 /usr/local/bin/php /application/www/vendor/bin/phpunit"
+      "docker exec -i -w /application/www flysystem-wrapper-tests /usr/local/bin/php /application/www/vendor/bin/phpunit"
     ]
   },
   "minimum-stability": "dev",
